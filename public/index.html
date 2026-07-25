@@ -301,10 +301,22 @@
     /* ============================================================
        FILE UPLOAD AREA
     ============================================================ */
+    .upload-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .upload-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .drop-zone {
       border: 2px dashed var(--border-s);
       border-radius: var(--r-sm);
-      padding: 40px 20px;
+      padding: 24px 16px;
       text-align: center;
       cursor: pointer;
       transition: border-color 0.3s, background 0.3s;
@@ -318,16 +330,16 @@
     }
 
     .drop-zone .icon-text {
-      font-size: 32px;
+      font-size: 24px;
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       opacity: 0.4;
       font-family: 'Geist Mono', monospace;
       color: var(--muted);
     }
 
     .drop-zone .text {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
     }
 
@@ -343,53 +355,53 @@
       cursor: pointer;
     }
 
-    .file-info {
-      display: none;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      background: var(--surface-h);
-      border-radius: var(--r-sm);
-      margin-top: 12px;
+    .drop-zone .label {
       font-family: 'Geist Mono', monospace;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .file-info.show {
-      display: flex;
-    }
-
-    .file-info .name {
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .file-info .size {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--dim);
-      font-size: 10px;
+      margin-top: 4px;
+      display: block;
     }
 
-    .file-info .remove {
-      background: rgba(255,55,95,0.1);
-      border: 1px solid rgba(255,55,95,0.2);
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
+    /* File status badges */
+    .file-status {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .file-status .badge {
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid var(--border-s);
+      color: var(--muted);
+      background: var(--surface-h);
+    }
+
+    .file-status .badge.loaded {
+      border-color: rgba(78, 205, 196, 0.3);
+      color: #4ecdc4;
+    }
+
+    .file-status .badge .remove-badge {
+      margin-left: 6px;
       cursor: pointer;
       color: var(--pink);
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
+      font-size: 11px;
+      background: none;
+      border: none;
       font-family: 'Geist Mono', monospace;
     }
 
-    .file-info .remove:hover {
-      background: rgba(255,55,95,0.2);
+    .file-status .badge .remove-badge:hover {
+      opacity: 0.7;
     }
 
     /* ============================================================
@@ -400,6 +412,8 @@
       flex-direction: column;
       gap: 12px;
       margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
     }
 
     .audio-controls.show {
@@ -520,7 +534,7 @@
     }
 
     /* ============================================================
-       LYRICS
+       LYRICS - BIG CENTER MODE
     ============================================================ */
     .lyrics-container {
       position: relative;
@@ -528,6 +542,9 @@
       overflow-y: auto;
       padding: 20px 0;
       scroll-behavior: smooth;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .lyrics-container::-webkit-scrollbar {
@@ -539,12 +556,21 @@
       border-radius: 100px;
     }
 
+    .lyrics-wrapper {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 20px 0;
+    }
+
     .lyrics-container .empty {
       text-align: center;
       color: var(--dim);
       font-size: 14px;
       padding: 60px 20px;
       line-height: 2;
+      width: 100%;
     }
 
     .lyrics-container .empty .icon-text {
@@ -557,44 +583,50 @@
     }
 
     .lyric-line {
-      padding: 8px 20px;
-      font-size: 16px;
+      padding: 10px 20px;
+      font-size: 18px;
       line-height: 1.6;
       color: var(--muted);
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       cursor: pointer;
       border-radius: 8px;
-      margin: 2px 0;
+      margin: 4px 0;
       text-align: center;
-      position: relative;
+      opacity: 0.4;
+      transform: scale(0.92);
     }
 
     .lyric-line:hover {
       background: var(--surface-h);
       color: var(--text);
+      opacity: 0.8;
     }
 
     .lyric-line.active {
       color: #fff;
-      font-size: 22px;
+      font-size: 30px;
       font-weight: 600;
-      text-shadow: 0 0 30px rgba(191, 90, 242, 0.4), 0 0 60px rgba(191, 90, 242, 0.2);
+      opacity: 1;
+      transform: scale(1);
+      text-shadow: 0 0 40px rgba(191, 90, 242, 0.5), 0 0 80px rgba(191, 90, 242, 0.2);
       background: var(--accent-dim);
       border: 1px solid rgba(191, 90, 242, 0.15);
-      transform: scale(1.02);
+      padding: 14px 24px;
     }
 
     .lyric-line .timestamp {
       font-family: 'Geist Mono', monospace;
-      font-size: 10px;
+      font-size: 11px;
       color: var(--dim);
-      margin-right: 10px;
+      margin-right: 12px;
       opacity: 0.5;
+      display: none;
     }
 
     .lyric-line.active .timestamp {
       color: var(--accent);
       opacity: 1;
+      display: inline;
     }
 
     /* ============================================================
@@ -743,12 +775,17 @@
     }
 
     .fullscreen-lyrics .lyric-line {
-      font-size: 24px;
-      padding: 12px 20px;
+      font-size: 26px;
+      padding: 14px 20px;
+      opacity: 0.3;
+      transform: scale(0.9);
     }
 
     .fullscreen-lyrics .lyric-line.active {
-      font-size: 32px;
+      font-size: 38px;
+      opacity: 1;
+      transform: scale(1);
+      padding: 18px 24px;
     }
 
     .fullscreen-lyrics::-webkit-scrollbar {
@@ -758,23 +795,6 @@
     .fullscreen-lyrics::-webkit-scrollbar-thumb {
       background: var(--accent);
       border-radius: 100px;
-    }
-
-    /* ============================================================
-       LOADING SPINNER
-    ============================================================ */
-    .spinner {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--border-s);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      flex-shrink: 0;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
     }
 
     /* ============================================================
@@ -797,14 +817,15 @@
     @media (max-width: 600px) {
       .wrap { padding: 20px 14px 60px; }
       .hero h1 { font-size: 24px; }
-      .lyric-line { font-size: 14px; padding: 6px 16px; }
-      .lyric-line.active { font-size: 18px; }
+      .lyric-line { font-size: 16px; padding: 8px 16px; }
+      .lyric-line.active { font-size: 22px; padding: 12px 18px; }
       .audio-top { justify-content: center; }
       .volume-control input[type="range"] { width: 40px; }
-      .fullscreen-lyrics .lyric-line { font-size: 18px; }
-      .fullscreen-lyrics .lyric-line.active { font-size: 24px; }
+      .fullscreen-lyrics .lyric-line { font-size: 20px; }
+      .fullscreen-lyrics .lyric-line.active { font-size: 28px; }
       .card-body { padding: 14px; }
-      .drop-zone { padding: 28px 16px; }
+      .drop-zone { padding: 18px 12px; }
+      .drop-zone .icon-text { font-size: 20px; }
     }
 
     @media (min-width: 768px) {
@@ -832,7 +853,7 @@
   <div class="hero">
     <div class="hero-badge"><span class="badge-dot"></span> Lirik Tersinkron</div>
     <h1>Sync <em>lyrics.</em><br><strong>Your way.</strong></h1>
-    <p>Upload file LRC, TXT, atau BAT — lirik langsung tersinkron dengan lagu.</p>
+    <p>Upload LRC + MP3 — lirik langsung tersinkron dengan lagu.</p>
   </div>
 
   <!-- ========== MAIN CARD ========== -->
@@ -842,20 +863,33 @@
       <span class="title">Upload File</span>
     </div>
     <div class="card-body">
-      <!-- Drop Zone -->
-      <div class="drop-zone" id="dropZone">
-        <span class="icon-text">[+]</span>
-        <div class="text">
-          Drag & drop file di sini, atau <strong>cari file</strong>
+      <!-- Upload Grid: LRC + MP3 -->
+      <div class="upload-grid">
+        <!-- LRC Drop Zone -->
+        <div class="drop-zone" id="lrcDropZone">
+          <span class="icon-text">[LRC]</span>
+          <div class="text">
+            <strong>LRC / TXT / BAT</strong>
+          </div>
+          <span class="label">Drag & drop atau klik</span>
+          <input type="file" id="lrcInput" accept=".lrc,.txt,.bat"/>
         </div>
-        <input type="file" id="fileInput" accept=".lrc,.txt,.bat"/>
+
+        <!-- MP3 Drop Zone -->
+        <div class="drop-zone" id="mp3DropZone">
+          <span class="icon-text">[MP3]</span>
+          <div class="text">
+            <strong>MP3 / Audio</strong>
+          </div>
+          <span class="label">Drag & drop atau klik</span>
+          <input type="file" id="mp3Input" accept=".mp3,.m4a,.wav,.ogg,.flac"/>
+        </div>
       </div>
 
-      <!-- File Info -->
-      <div class="file-info" id="fileInfo">
-        <span class="name" id="fileName">file.lrc</span>
-        <span class="size" id="fileSize">0 KB</span>
-        <button class="remove" id="removeFile">×</button>
+      <!-- File Status Badges -->
+      <div class="file-status" id="fileStatus">
+        <span class="badge" id="lrcStatus">LRC: -</span>
+        <span class="badge" id="mp3Status">MP3: -</span>
       </div>
 
       <!-- Audio Controls -->
@@ -889,7 +923,9 @@
           <span class="icon-text">[ ]</span>
           Belum ada lirik.<br/>Upload file .lrc, .txt, atau .bat untuk memulai.
         </div>
-        <div id="lyricsList"></div>
+        <div class="lyrics-wrapper" id="lyricsWrapper">
+          <div id="lyricsList"></div>
+        </div>
       </div>
     </div>
 
@@ -930,13 +966,17 @@
 
     const html = document.documentElement;
     const themeBtn = $('#themeBtn');
-    const dropZone = $('#dropZone');
-    const fileInput = $('#fileInput');
-    const fileInfo = $('#fileInfo');
-    const fileName = $('#fileName');
-    const fileSize = $('#fileSize');
-    const removeFile = $('#removeFile');
 
+    // LRC Upload
+    const lrcDropZone = $('#lrcDropZone');
+    const lrcInput = $('#lrcInput');
+    const mp3DropZone = $('#mp3DropZone');
+    const mp3Input = $('#mp3Input');
+
+    const lrcStatus = $('#lrcStatus');
+    const mp3Status = $('#mp3Status');
+
+    // Audio
     const audioControls = $('#audioControls');
     const playBtn = $('#playBtn');
     const timeDisplay = $('#timeDisplay');
@@ -945,7 +985,9 @@
     const volumeBtn = $('#volumeBtn');
     const volumeSlider = $('#volumeSlider');
 
+    // Lyrics
     const lyricsContainer = $('#lyricsContainer');
+    const lyricsWrapper = $('#lyricsWrapper');
     const lyricsList = $('#lyricsList');
     const emptyState = $('#emptyState');
     const lyricCount = $('#lyricCount');
@@ -963,14 +1005,17 @@
     // STATE
     // ============================================================
     const state = {
-      lyrics: [],          // [{ time: 12.35, text: "Hello" }]
-      audio: null,         // Audio element
+      lyrics: [],
+      audio: null,
       isPlaying: false,
       currentLine: -1,
       autoScroll: true,
       volume: 80,
-      fileLoaded: false,
-      interval: 3,         // Default 3 seconds per line for TXT/BAT
+      lrcLoaded: false,
+      mp3Loaded: false,
+      interval: 3,
+      lrcName: '',
+      mp3Name: '',
     };
 
     // ============================================================
@@ -1056,7 +1101,7 @@
     }
 
     // ============================================================
-    // PARSE TXT/BAT (auto-generate timestamps)
+    // PARSE TXT/BAT
     // ============================================================
     function parsePlainText(text) {
       const lines = text.split('\n')
@@ -1094,17 +1139,22 @@
       }
 
       state.lyrics = parsed;
+      state.lrcName = filename;
       renderLyrics();
       updateLyricCount();
 
       if (state.lyrics.length > 0) {
         emptyState.style.display = 'none';
+        state.lrcLoaded = true;
+        lrcStatus.innerHTML = 'LRC: ✓ ' + parsed.length + ' lines <button class="remove-badge" data-remove="lrc">×</button>';
+        lrcStatus.className = 'badge loaded';
       } else {
         emptyState.style.display = 'block';
         showToast('No lyrics found in file', 'error');
       }
 
       state.currentLine = -1;
+      checkReadyToPlay();
     }
 
     // ============================================================
@@ -1173,7 +1223,7 @@
     }
 
     // ============================================================
-    // UPDATE ACTIVE LINE
+    // UPDATE ACTIVE LINE - CENTER MODE
     // ============================================================
     function updateActiveLine(currentTime) {
       let activeIndex = -1;
@@ -1226,9 +1276,25 @@
     }
 
     // ============================================================
-    // HANDLE FILE
+    // CHECK READY TO PLAY
     // ============================================================
-    function handleFile(file) {
+    function checkReadyToPlay() {
+      if (state.lrcLoaded && state.mp3Loaded) {
+        showToast('LRC dan MP3 siap diputar!', 'success');
+        audioControls.classList.add('show');
+        // Try autoplay
+        if (state.audio) {
+          state.audio.play().catch(() => {
+            showToast('Autoplay blocked. Click play to start.', 'info');
+          });
+        }
+      }
+    }
+
+    // ============================================================
+    // HANDLE LRC FILE
+    // ============================================================
+    function handleLRCFile(file) {
       const validTypes = ['.lrc', '.txt', '.bat'];
       const ext = '.' + file.name.split('.').pop().toLowerCase();
 
@@ -1237,16 +1303,10 @@
         return;
       }
 
-      fileName.textContent = file.name;
-      fileSize.textContent = (file.size / 1024).toFixed(1) + ' KB';
-      fileInfo.classList.add('show');
-
       const reader = new FileReader();
       reader.onload = function(e) {
         const text = e.target.result;
-        state.fileLoaded = true;
         loadLyrics(text, file.name);
-        showToast('File loaded: ' + file.name, 'success');
       };
       reader.onerror = function() {
         showToast('Error reading file', 'error');
@@ -1255,9 +1315,17 @@
     }
 
     // ============================================================
-    // AUDIO HANDLING
+    // HANDLE MP3 FILE
     // ============================================================
-    function setupAudio(file) {
+    function handleMP3File(file) {
+      const validTypes = ['.mp3', '.m4a', '.wav', '.ogg', '.flac'];
+      const ext = '.' + file.name.split('.').pop().toLowerCase();
+
+      if (!validTypes.includes(ext)) {
+        showToast('File harus MP3 atau audio', 'error');
+        return;
+      }
+
       if (state.audio) {
         state.audio.pause();
         state.audio.src = '';
@@ -1266,11 +1334,15 @@
       const audio = new Audio();
       audio.src = URL.createObjectURL(file);
       audio.volume = state.volume / 100;
+      state.mp3Name = file.name;
 
       audio.addEventListener('loadedmetadata', function() {
         timeDisplay.textContent = formatTime(0) + ' / ' + formatTime(audio.duration);
-        audioControls.classList.add('show');
+        state.mp3Loaded = true;
+        mp3Status.innerHTML = 'MP3: ✓ ' + file.name + ' <button class="remove-badge" data-remove="mp3">×</button>';
+        mp3Status.className = 'badge loaded';
         showToast('Audio loaded: ' + file.name, 'success');
+        checkReadyToPlay();
       });
 
       audio.addEventListener('timeupdate', function() {
@@ -1279,7 +1351,9 @@
         const percent = duration > 0 ? (current / duration) * 100 : 0;
         progressFill.style.width = percent + '%';
         timeDisplay.textContent = formatTime(current) + ' / ' + formatTime(duration);
-        updateActiveLine(current);
+        if (state.lyrics.length > 0) {
+          updateActiveLine(current);
+        }
       });
 
       audio.addEventListener('play', function() {
@@ -1302,10 +1376,46 @@
       });
 
       state.audio = audio;
+    }
 
-      audio.play().catch(function() {
-        showToast('Autoplay blocked. Click play to start.', 'info');
-      });
+    // ============================================================
+    // REMOVE FILE
+    // ============================================================
+    function removeFile(type) {
+      if (type === 'lrc') {
+        state.lyrics = [];
+        state.lrcLoaded = false;
+        state.lrcName = '';
+        state.currentLine = -1;
+        lyricsList.innerHTML = '';
+        emptyState.style.display = 'block';
+        updateLyricCount();
+        lrcStatus.textContent = 'LRC: -';
+        lrcStatus.className = 'badge';
+        showToast('LRC removed', 'info');
+      }
+
+      if (type === 'mp3') {
+        if (state.audio) {
+          state.audio.pause();
+          state.audio.src = '';
+          state.audio = null;
+        }
+        state.mp3Loaded = false;
+        state.mp3Name = '';
+        audioControls.classList.remove('show');
+        playBtn.textContent = '▶';
+        progressFill.style.width = '0%';
+        timeDisplay.textContent = '00:00 / 00:00';
+        mp3Status.textContent = 'MP3: -';
+        mp3Status.className = 'badge';
+        showToast('MP3 removed', 'info');
+      }
+
+      // Reset both if both removed
+      if (!state.lrcLoaded && !state.mp3Loaded) {
+        // sudah reset
+      }
     }
 
     // ============================================================
@@ -1389,55 +1499,73 @@
     // EVENT LISTENERS
     // ============================================================
 
-    // File upload
-    fileInput.addEventListener('change', function(e) {
+    // LRC Upload
+    lrcInput.addEventListener('change', function(e) {
       if (this.files && this.files[0]) {
-        handleFile(this.files[0]);
+        handleLRCFile(this.files[0]);
       }
     });
 
-    dropZone.addEventListener('dragover', function(e) {
+    lrcDropZone.addEventListener('dragover', function(e) {
       e.preventDefault();
       this.classList.add('dragover');
     });
 
-    dropZone.addEventListener('dragleave', function(e) {
+    lrcDropZone.addEventListener('dragleave', function(e) {
       e.preventDefault();
       this.classList.remove('dragover');
     });
 
-    dropZone.addEventListener('drop', function(e) {
+    lrcDropZone.addEventListener('drop', function(e) {
       e.preventDefault();
       this.classList.remove('dragover');
       if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-        handleFile(e.dataTransfer.files[0]);
-        fileInput.files = e.dataTransfer.files;
+        handleLRCFile(e.dataTransfer.files[0]);
+        lrcInput.files = e.dataTransfer.files;
       }
     });
 
-    removeFile.addEventListener('click', function() {
-      fileInfo.classList.remove('show');
-      fileInput.value = '';
-      state.lyrics = [];
-      state.fileLoaded = false;
-      lyricsList.innerHTML = '';
-      emptyState.style.display = 'block';
-      updateLyricCount();
-      if (state.audio) {
-        state.audio.pause();
-        state.audio.src = '';
-        state.audio = null;
-        audioControls.classList.remove('show');
-        playBtn.textContent = '▶';
-        progressFill.style.width = '0%';
-        timeDisplay.textContent = '00:00 / 00:00';
+    // MP3 Upload
+    mp3Input.addEventListener('change', function(e) {
+      if (this.files && this.files[0]) {
+        handleMP3File(this.files[0]);
       }
-      showToast('File removed', 'info');
+    });
+
+    mp3DropZone.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      this.classList.add('dragover');
+    });
+
+    mp3DropZone.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      this.classList.remove('dragover');
+    });
+
+    mp3DropZone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleMP3File(e.dataTransfer.files[0]);
+        mp3Input.files = e.dataTransfer.files;
+      }
+    });
+
+    // Remove buttons (event delegation)
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('remove-badge')) {
+        const type = e.target.dataset.remove;
+        if (type) {
+          removeFile(type);
+          // Reset input
+          if (type === 'lrc') lrcInput.value = '';
+          if (type === 'mp3') mp3Input.value = '';
+        }
+      }
     });
 
     // Audio controls
     playBtn.addEventListener('click', togglePlay);
-
     progressContainer.addEventListener('click', handleSeek);
 
     volumeSlider.addEventListener('input', function() {
@@ -1456,28 +1584,29 @@
     fullscreenBtn.addEventListener('click', toggleFullscreen);
     fullscreenClose.addEventListener('click', toggleFullscreen);
 
+    // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT') return;
+
       if (e.key === 'Escape' && fullscreenOverlay.classList.contains('show')) {
         toggleFullscreen();
       }
+
       if (e.key === ' ' || e.key === 'Space') {
         e.preventDefault();
         togglePlay();
       }
-    });
 
-    // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-      if (e.target.tagName === 'INPUT') return;
       if (e.key === 'ArrowRight' && state.audio) {
         state.audio.currentTime += 5;
       }
+
       if (e.key === 'ArrowLeft' && state.audio) {
         state.audio.currentTime -= 5;
       }
     });
 
-    console.log('SauceLRC loaded successfully');
+    console.log('SauceLRC loaded - Like CLI lrc-player but in browser');
   })();
 </script>
 </body>
